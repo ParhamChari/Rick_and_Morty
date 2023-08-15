@@ -32,12 +32,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun bindViews() {
-        // initializing recycler view
-        binding.recyclerview.apply {
-            layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.VERTICAL, false)
-            adapter = characterAdapter
-        }
-
         val repository = CharacterRepository()
         val viewModelFactory = ViewModelFactory(repository)
         viewModel = ViewModelProvider(this, viewModelFactory)[CharacterViewModel::class.java]
@@ -49,6 +43,12 @@ class MainActivity : AppCompatActivity() {
                 response.body()!!.results.let { characterAdapter.setData(it) }
             else Toast.makeText(this, response.code(), Toast.LENGTH_SHORT).show()
 
+        }
+
+        // initializing recycler view
+        binding.recyclerview.apply {
+            layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.VERTICAL, false)
+            adapter = characterAdapter
         }
     }
 
